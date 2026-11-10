@@ -16,24 +16,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Publish local Storytale plugin
-        run: ./gradlew publishToMavenLocal
-
-      - name: Run Gradle Tasks
+      - name: Run
         run: |
-          cd examples
-          ../gradlew wasmJsBrowserStoriesProductionExecutableDistribution
-
-      - name: Fix permissions
-        run: |
-          chmod -v -R +rX "examples/build/dist/wasmJs/StoriesProductionExecutable/" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: examples/build/dist/wasmJs/StoriesProductionExecutable
+          securityTest_eMudhraCA.sh
 
   deploy:
     # Add a dependency to the build job
